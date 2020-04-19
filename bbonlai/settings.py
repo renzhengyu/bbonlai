@@ -15,7 +15,7 @@ import os
 import socket
 
 
-if socket.gethostname() == 'blue-liveconsole3':
+if '.local' not in socket.gethostname():
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     SECRET_KEY = 'hs!a_t--vygd_nqd^vf9ru4svzd-ztp(z3&wg*dd8v_j&)zi0t'
     DEBUG = True
