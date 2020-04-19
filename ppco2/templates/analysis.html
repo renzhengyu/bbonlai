@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Phnom Penh Analysis{% endblock %}
+
+{% block content %}
+  <div id="planet_chart_container" data-url="{% url 'ppco2:planet_chart_data' %}"></div>
+  <script src="https://code.highcharts.com/highcharts.src.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $.ajax({
+      url: $("#planet_chart_container").attr("data-url"),
+      dataType: 'json',
+      success: function (data) {
+        Highcharts.chart("planet_chart_container", data);
+      }
+    });
+  </script>
+
+{% endblock %}

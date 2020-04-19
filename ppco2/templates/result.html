@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Carbon Footprint Calculator - Phnom Penh{% endblock %}
+
+{% block content %}
+<div class="w3-container w3-center">
+  <div class="w3-padding-32">Submission #{{pk}}</div>
+  <div class="w3-row">
+    <div class="w3-container w3-quarter"></div>
+    <div class="w3-container w3-half">
+      <div class="w3-card-4 w3-theme w3-padding">
+        <p>You emitted</p>
+        <div class="w3-jumbo w3-animate-zoom">{{ cfp|floatformat:1 }}</div>
+        <p>tonnes of CO<sup>2</sup> in the past 12 months.
+        If everyone lived like you, we would need<span class="w3-badge w3-red"> {{ planets|floatformat:1 }} </span>planets.</p>
+      </div>
+      <div class="w3-padding-32"><a href="{% url 'ppco2:formseven' %}">Calculate Again</a></div>
+      <div class="w3-padding-32"><a href="{% url 'ppco2:planet_chart' %}">Analysis</a></div>
+      {% comment %} <div class="w3-padding-32 w3-tiny">{{form_data}}</div> {% endcomment %}
+    
+    </div>
+    <div class="w3-container w3-quarter"></div>
+  </div>
+</div>
+{% endblock %}
