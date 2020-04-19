@@ -10,126 +10,209 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+
 import os
+import platform
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+node = platform.node()
+production_machines = ('blue-liveconsole8')
 
+if node in production_machines:
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    SECRET_KEY = 'hs!a_t--vygd_nqd^vf9ru4svzd-ztp(z3&wg*dd8v_j&)zi0t'
+    DEBUG = True
+    ALLOWED_HOSTS = [
+        'renzhengyu.pythonanywhere.com',
+    ]
+    INSTALLED_APPS = [
+        'ppco2.apps.Ppco2Config',
+        'formtools',
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+    ]
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
+    MIDDLEWARE = [
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    ]
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '=oa&z^4)c&m@y4q2edzml&zj%%$^b2bla$356s^@ar1ot5aq46'
+    ROOT_URLCONF = 'bbonlai.urls'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-]
-
-
-# Application definition
-
-INSTALLED_APPS = [
-    'ppco2.apps.Ppco2Config',
-    'formtools',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-]
-
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-ROOT_URLCONF = 'bbonlai.urls'
-
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
+    TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    'django.contrib.messages.context_processors.messages',
+                ],
+            },
         },
-    },
-]
+    ]
 
-WSGI_APPLICATION = 'bbonlai.wsgi.application'
+    WSGI_APPLICATION = 'bbonlai.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "db_bbonglai",
-        "USER": "user_tina",
-        "PASSWORD": "",
-        "HOST": "localhost",
-        "PORT": "",
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'renzhengyu$bbonlai',
+            'USER': 'renzhengyu',
+            'PASSWORD': 'dnskwioJYIGVF572917HYIHAUHKJH',
+            'HOST': 'renzhengyu.mysql.pythonanywhere-services.com',
+            'PORT': '',
+            'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"},
+        }
     }
 
-    # MySQL on PythonAnywhere: dnskwioJYIGVF572917HYIHAUHKJH
+    AUTH_PASSWORD_VALIDATORS = [
+        {
+            'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        },
+    ]
 
-}
+    LANGUAGE_CODE = 'en-us'
+    TIME_ZONE = 'Asia/Phnom_Penh'
+    USE_I18N = True
+    USE_L10N = True
+    USE_TZ = True
+    STATIC_URL = '/static/'
 
+else:
 
-# Password validation
-# https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
+    # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+    # Quick-start development settings - unsuitable for production
+    # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
+    # SECURITY WARNING: keep the secret key used in production secret!
+    SECRET_KEY = '=oa&z^4)c&m@y4q2edzml&zj%%$^b2bla$356s^@ar1ot5aq46'
 
-# Internationalization
-# https://docs.djangoproject.com/en/3.0/topics/i18n/
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DEBUG = True
 
-LANGUAGE_CODE = 'en-us'
+    ALLOWED_HOSTS = [
+        '127.0.0.1',
+    ]
 
-TIME_ZONE = 'Asia/Phnom_Penh'
+    # Application definition
 
-USE_I18N = True
+    INSTALLED_APPS = [
+        'ppco2.apps.Ppco2Config',
+        'formtools',
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+    ]
 
-USE_L10N = True
+    MIDDLEWARE = [
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    ]
 
-USE_TZ = True
+    ROOT_URLCONF = 'bbonlai.urls'
 
+    TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    'django.contrib.messages.context_processors.messages',
+                ],
+            },
+        },
+    ]
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
+    WSGI_APPLICATION = 'bbonlai.wsgi.application'
 
-STATIC_URL = '/static/'
+    # Database
+    # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+
+    DATABASES = {
+        # 'default': {
+        #     'ENGINE': 'django.db.backends.sqlite3',
+        #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # }
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": "db_bbonglai",
+            "USER": "user_tina",
+            "PASSWORD": "",
+            "HOST": "localhost",
+            "PORT": "",
+        }
+
+        # MySQL on PythonAnywhere: dnskwioJYIGVF572917HYIHAUHKJH
+
+    }
+
+    # Password validation
+    # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
+
+    AUTH_PASSWORD_VALIDATORS = [
+        {
+            'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        },
+    ]
+
+    # Internationalization
+    # https://docs.djangoproject.com/en/3.0/topics/i18n/
+
+    LANGUAGE_CODE = 'en-us'
+
+    TIME_ZONE = 'Asia/Phnom_Penh'
+
+    USE_I18N = True
+
+    USE_L10N = True
+
+    USE_TZ = True
+
+    # Static files (CSS, JavaScript, Images)
+    # https://docs.djangoproject.com/en/3.0/howto/static-files/
+
+    STATIC_URL = '/static/'
