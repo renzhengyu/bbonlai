@@ -12,12 +12,10 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 
 import os
-import platform
+import socket
 
-node = platform.node()
-production_machines = ('blue-liveconsole8')
 
-if node in production_machines:
+if socket.gethostname() == 'blue-liveconsole3':
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     SECRET_KEY = 'hs!a_t--vygd_nqd^vf9ru4svzd-ztp(z3&wg*dd8v_j&)zi0t'
     DEBUG = True
