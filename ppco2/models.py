@@ -114,7 +114,7 @@ class Calculation(models.Model):
     d3 = models.PositiveSmallIntegerField(
         default=200,
         verbose_name="Q3 - How many grams of chicken do you eat per week?",
-        help_text="",
+        help_text="(On average, Americans eat 500 g of chicken per week.)",
     )
     d4 = models.PositiveSmallIntegerField(
         default=200,
@@ -143,11 +143,11 @@ class Calculation(models.Model):
     )
 
     class FoodFraction(models.IntegerChoices):
-        NONE = 0, 'None'
-        SOME = 25, 'Some'
-        HALF = 50, 'Half'
-        MOST = 75, 'Mostly'
-        ALL = 100, 'All'
+        NONE = 0, 'None (0%)'
+        SOME = 25, 'Some (25%)'
+        HALF = 50, 'Half (50%)'
+        MOST = 75, 'Mostly (75%)'
+        ALL = 100, 'All (100%)'
 
     d9 = models.PositiveSmallIntegerField(
         default=FoodFraction.MOST,
