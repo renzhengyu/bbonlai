@@ -181,45 +181,51 @@ class Calculation(models.Model):
     )
     e3 = models.PositiveSmallIntegerField(
         default=1,
-        verbose_name="Q3 - How many people do you share your living space and your electricity bill with (family or roommates living in the same space)?",
+        verbose_name="Q4 - How many people do you share your living space and your electricity bill with (family or roommates living in the same space)?",
         help_text="",
     )
     e4 = models.PositiveSmallIntegerField(
         default=8,
         validators=[MaxValueValidator(24), MinValueValidator(0)],
-        verbose_name="Q4 - How many hours per day do you spend in air-conditioning outside of your home (e.g. office, coffee shop)",
+        verbose_name="Q5 - How many hours per day do you spend in air-conditioning outside of your home (e.g. office, coffee shop)",
         help_text="",
     )
     e5 = models.PositiveSmallIntegerField(
         default=1,
         validators=[MinValueValidator(1)],
-        verbose_name="Q5 - Roughly how many people share this in total (including yourself. E.g. crowded coffee shop with 20 people, or small office with 4 people)?",
+        verbose_name="Q6 - Roughly how many people share this in total (including yourself. E.g. crowded coffee shop with 20 people, or small office with 4 people)?",
         help_text="",
+    )
+    e6 = models.PositiveSmallIntegerField(
+        default=800,
+        validators=[MinValueValidator(500), MaxValueValidator(4000)],
+        verbose_name="Q3 - What rate do you pay for electricity? (KHR/kWh)",
+        help_text=""
     )
     f1 = models.PositiveSmallIntegerField(
         default=5,
-        verbose_name="Q1 - How old is your house? (in years)",
+        verbose_name="Q2 - How old is your house? (in years)",
         help_text="",
     )
     f2 = models.PositiveSmallIntegerField(
         default=20,
-        verbose_name="Q2 - How long do you think the house will be around? (in years)",
+        verbose_name="Q3 - How long do you think the house will be around? (in years)",
         help_text="",
     )
     f3 = models.PositiveSmallIntegerField(
         default=50,
         validators=[MinValueValidator(1)],
-        verbose_name="Q3 - How big is your house, in square meters?",
+        verbose_name="Q4 - How big is your house, in square meters?",
         help_text="",
     )
 
     class HouseMaterial(models.IntegerChoices):
-        CONCRETE = 100, 'Bricks and concrete'
-        WOOD = 10, "Wood"
+        CONCRETE = 1000, 'Bricks and concrete'
+        WOOD = 0, "Wood"
 
     f4 = models.PositiveSmallIntegerField(
         default=HouseMaterial.CONCRETE,
-        verbose_name="Q4 - What is your house primarily made of?",
+        verbose_name="Q1 - What is your house primarily made of?",
         help_text="",
         choices=HouseMaterial.choices,
     )
@@ -233,7 +239,7 @@ class Calculation(models.Model):
     def clean(self):
         if self.d9+self.da+self.db != 100:
             raise ValidationError({
-                'd9':"Proportions don't add up to 100%.",
-                'da':"Proportions don't add up to 100%.",
-                'db':"Proportions don't add up to 100%.",
-                })
+                'd9': "Proportions don't add up to 100%.",
+                'da': "Proportions don't add up to 100%.",
+                'db': "Proportions don't add up to 100%.",
+            })

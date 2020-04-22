@@ -46,6 +46,25 @@
         {x.style.display = "none";}
       else {x.style.display = "";}
     });
+
+    $('input[name="6-f4"]').change(function()  {
+      x1 = document.getElementById("id_6-f1").parentElement.parentElement
+      x2 = document.getElementById("id_6-f2").parentElement.parentElement
+      x3 = document.getElementById("id_6-f3").parentElement.parentElement
+      x4 = document.getElementById("id_6-f5").parentElement.parentElement
+      if(parseInt($(this).val()) === 0) {
+        x1.style.display = "none"
+        x2.style.display = "none"
+        x3.style.display = "none"
+        x4.style.display = "none"
+      }
+      else {
+        x1.style.display = ""
+        x2.style.display = ""
+        x3.style.display = ""
+        x4.style.display = ""
+      }
+    });
   });
 </script>
 

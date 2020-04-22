@@ -3,7 +3,6 @@ from .models import Calculation
 from django import forms
 
 
-
 class CfpForm1(ModelForm):
     class Meta:
         model = Calculation
@@ -43,12 +42,12 @@ class CfpForm5(ModelForm):
 class CfpForm6(ModelForm):
     class Meta:
         model = Calculation
-        fields = ('e1', 'e2', 'e3', 'e4', 'e5')
+        fields = ('e1', 'e2', 'e6', 'e3', 'e4', 'e5')
         # widgets = {'e1': forms.RadioSelect}
 
 
 class CfpForm7(ModelForm):
     class Meta:
         model = Calculation
-        fields = ('f1', 'f2', 'f3', 'f4', 'f5')
+        fields = ('f4', 'f1', 'f2', 'f3', 'f5')
         widgets = {'f4': forms.RadioSelect}

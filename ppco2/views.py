@@ -8,8 +8,6 @@ import json
 from django.http.response import JsonResponse
 
 
-
-
 def carbonfp(answers):
     return (
         answers['a1'] * 0.18 +
@@ -35,16 +33,12 @@ def carbonfp(answers):
         answers['d9'] * 9.3 / 100 +
         answers['da'] * 93 / 100 +
         answers['db'] * 223.2 / 100 +
-        answers['e1'] +  # need review
-        answers['e2'] * 12 * (4000 / 800) * 0.422 / answers['e3'] +
-        answers['e4'] +
-        answers['e5'] +
-        answers['f1'] +
-        answers['f2'] +
-        answers['f3'] +
-        answers['f4'] +
-        answers['f5']
-    )/1000
+        answers['e1'] * 0.05 * (answers['e2'] * 4000/answers['e6'])/100 +
+        answers['e2'] * (4000/answers['e6']) * 250 * ((100-answers['e1'])/100)*12 / answers['e3'] +
+        answers['e4'] * answers['e2'] / answers['e5'] +  # need confirmation
+        answers['f4'] * answers['f3'] / \
+        (answers['f1'] + answers['f2']) / answers['f5']
+    )/1000  # kg => ton
 
 
 def planets(carbonfp):
@@ -52,8 +46,15 @@ def planets(carbonfp):
 
 
 class CfpWizard(SessionWizardView):
-    form_list = [CfpForm1, CfpForm2, CfpForm3,
-                 CfpForm4, CfpForm5, CfpForm6, CfpForm7]
+    form_list = [
+        CfpForm1,
+        CfpForm2,
+        CfpForm3,
+        CfpForm4,
+        CfpForm5,
+        CfpForm6,
+        CfpForm7
+    ]
     template_name = 'ppcfpcal.html'
 
     def get(self, request, *args, **kwargs):
@@ -81,6 +82,7 @@ class CfpWizard(SessionWizardView):
         }
         return render(self.request, 'result.html', context)
 
+
 def planet_chart(request):
     return render(request, 'analysis.html')
 
@@ -107,18 +109,21 @@ def planet_chart_data(request):
         'title': {'text': 'Person-Planet Distribution'},
         'subtitle': {'text': f"Based on {total_submission} submissions"},
         'yAxis': {'title': {'text': 'Persons'}},
-        'xAxis': {'categories': [
-            '1 planet or less', 
-            '1~2 planets',
-            '2~3 planets',
-            '3~4 planets',
-            '4~5 planets', 
-            '5~6 planets', 
-            '6~7 planets', 
-            '7~8 planets', 
-            '8~9 planets', 
-            '9~10 planets', 
-            '>10 planets']},
+        'xAxis': {
+            'categories': [
+                '1 planet or less',
+                '1~2 planets',
+                '2~3 planets',
+                '3~4 planets',
+                '4~5 planets',
+                '5~6 planets',
+                '6~7 planets',
+                '7~8 planets',
+                '8~9 planets',
+                '9~10 planets',
+                '>10 planets'
+            ]
+        },
         'series': [{
             'name': 'Persons',
             'data': [data[key] for key in data],
