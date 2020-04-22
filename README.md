@@ -10,7 +10,7 @@ First app: ppco2: Carbon Footprint Calculator or PPers
 ### v0.2
 
 - using heroku postgresql
-- gitignore db_config.py
+- add STATIC_ROOT
 
 ### v0.1
 

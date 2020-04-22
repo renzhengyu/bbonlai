@@ -5,10 +5,8 @@ from bbonlai.db_config import heroku
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'hs!a_t--vygd_nqd^vf9ru4svzd-ztp(z3&wg*dd8v_j&)zi0t'
 DEBUG = True
-ALLOWED_HOSTS = [
-    'renzhengyu.pythonanywhere.com',
-    '127.0.0.1'
-]
+ALLOWED_HOSTS = ['*']
+
 INSTALLED_APPS = [
     'ppco2.apps.Ppco2Config',
     'formtools',
@@ -75,3 +73,4 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
