@@ -1,6 +1,6 @@
 import os
 from bbonlai.db_config import heroku
-
+import django_heroku
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'hs!a_t--vygd_nqd^vf9ru4svzd-ztp(z3&wg*dd8v_j&)zi0t'
@@ -74,3 +74,5 @@ USE_L10N = True
 USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+django_heroku.settings(locals())
