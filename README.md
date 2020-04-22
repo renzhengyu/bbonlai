@@ -11,7 +11,7 @@ First app: ppco2: Carbon Footprint Calculator or PPers
 * reordered questions on page electricity and house
 * add housing irrelavent disabling with js.
 
-### V0.01 - pre 20200422
+### v0.01 - pre 20200422
 #### Incomplete:
 * The carbon footprint formula is yet completed
 #### Done:
