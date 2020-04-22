@@ -243,3 +243,6 @@ GitHub.sublime-settings
 
 # MacOS
 .DS_Store
+
+
+*config.py
