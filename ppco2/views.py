@@ -2,43 +2,42 @@ from django.shortcuts import render
 from django.db.models import Q, Count
 from .models import Calculation
 from .forms import CfpForm1, CfpForm2, CfpForm3, CfpForm4, CfpForm5, CfpForm6, CfpForm7
-from formtools.wizard.views import SessionWizardView, CookieWizardView
+from formtools.wizard.views import SessionWizardView
 from collections import ChainMap
 import json
 from django.http.response import JsonResponse
 
 
-def carbonfp(answers):
+def carbonfp(a):
     return (
-        answers['a1'] * 0.18 +
-        answers['a2'] * 0.06 +
-        answers['a3'] * 0.09 +
-        answers['a4'] * 0.30 +
-        answers['a5'] * 0.26 +
-        answers['b1'] * 4.72 +
-        answers['b2'] * 11.80 +
-        answers['b3'] * 47.19 +
-        answers['c1'] * 15 / answers['c2'] +
-        answers['c3'] * 30 / answers['c4'] +
-        answers['c5'] * 300 / answers['c6'] +
-        answers['c7'] * 1500 / answers['c8'] +
-        answers['d1'] * 0.027 * 52 +
-        answers['d2'] * 0.012 * 52 +
-        answers['d3'] * 0.0069 * 52 +
-        answers['d4'] * 0.01 * 52 +
-        answers['d5'] * 0.0135 * 52 +
-        answers['d6'] * 0.002 * 52 +
-        answers['d7'] * 0.2 * 52 +
-        answers['d8'] * 0.001 * 52 +
-        answers['d9'] * 9.3 / 100 +
-        answers['da'] * 93 / 100 +
-        answers['db'] * 223.2 / 100 +
-        answers['e1'] * 0.05 * (answers['e2'] * 4000/answers['e6'])/100 +
-        answers['e2'] * (4000/answers['e6']) * 250 * ((100-answers['e1'])/100)*12 / answers['e3'] +
-        answers['e4'] * answers['e2'] / answers['e5'] +  # need confirmation
-        answers['f4'] * answers['f3'] / \
-        (answers['f1'] + answers['f2']) / answers['f5']
-    )/1000 - answers['offset']  # kg => ton
+        a['a1'] * 0.18 +            # plane
+        a['a2'] * 0.06 +            # train
+        a['a3'] * 0.09 +            # bus
+        a['a4'] * 0.30 +            # car
+        a['a5'] * 0.26 +            # moto
+        a['b1'] * 4.72 +            # small items
+        a['b2'] * 11.80 +           # medium items
+        a['b3'] * 47.19 +           # large items
+        a['c1'] * 15 / a['c2'] +    # very small appliances / their users
+        a['c3'] * 30 / a['c4'] +    # small appliances / their users
+        a['c5'] * 300 / a['c6'] +   # medium appliances / their users
+        a['c7'] * 1500 / a['c8'] +  # large appliances / their users
+        a['d1'] * 0.027 * 52 +      # beef
+        a['d2'] * 0.012 * 52 +      # port
+        a['d3'] * 0.0069 * 52 +     # chicken
+        a['d4'] * 0.01 * 52 +       # fish
+        a['d5'] * 0.0135 * 52 +     # cheese
+        a['d6'] * 0.002 * 52 +      # dairy
+        a['d7'] * 0.2 * 52 +        # eggs
+        a['d8'] * 0.001 * 52 +      # grains and veg
+        a['d9'] * 9.3 / 100 +       # <500km
+        a['da'] * 93 / 100 +        # <5000km
+        a['db'] * 223.2 / 100 +     # >= 5000km
+        a['e1'] * 0.05 * (a['e2'] * 4000/a['e6'])/100 +
+        a['e2'] * (4000/a['e6']) * 250 * ((100-a['e1'])/100)*12 / a['e3'] +
+        a['e4'] * a['e2'] / a['e5'] +
+        a['f4'] * a['f3'] / (a['f1'] + a['f2']) / a['f5']
+    )/1000 - a['offset']            # kg => ton, deduct offset
 
 
 def planets(carbonfp):
@@ -72,11 +71,10 @@ class CfpWizard(SessionWizardView):
         cal.planets = planets(cfp)
         cal.save()
         total_submission = Calculation.objects.count()
-
         context = {
-            'cfp': cfp,
+            'cfp': cal.cfp,
             'form_data': form_data_dict,
-            'planets': planets(cfp),
+            'planets': cal.planets,
             'pk': cal.pk,
             'total_submission': total_submission,
         }

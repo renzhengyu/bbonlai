@@ -11,6 +11,7 @@ First app: ppco2: Carbon Footprint Calculator or PPers
 
 - add offset
 - optimized question texts
+- need irina to verify the formula,
 
 ### v0.3
 
