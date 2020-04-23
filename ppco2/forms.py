@@ -6,7 +6,7 @@ from django import forms
 class CfpForm1(ModelForm):
     class Meta:
         model = Calculation
-        fields = ('name', 'email',)
+        fields = ('name', 'email', 'offset')
 
 
 class CfpForm2(ModelForm):

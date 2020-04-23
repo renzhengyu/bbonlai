@@ -38,7 +38,7 @@ def carbonfp(answers):
         answers['e4'] * answers['e2'] / answers['e5'] +  # need confirmation
         answers['f4'] * answers['f3'] / \
         (answers['f1'] + answers['f2']) / answers['f5']
-    )/1000  # kg => ton
+    )/1000 - answers['offset']  # kg => ton
 
 
 def planets(carbonfp):

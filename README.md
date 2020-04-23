@@ -7,6 +7,11 @@ First app: ppco2: Carbon Footprint Calculator or PPers
 
 ## What's new:
 
+### v0.4
+
+- add offset
+- optimized question texts
+
 ### v0.3
 
 - isolate db settings
