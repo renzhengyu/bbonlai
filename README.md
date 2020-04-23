@@ -7,6 +7,10 @@ First app: ppco2: Carbon Footprint Calculator or PPers
 
 ## What's new:
 
+### v0.3
+
+- isolate db settings
+
 ### v0.2
 
 - using heroku postgresql
