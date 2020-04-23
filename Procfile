@@ -1,1 +1,1 @@
-web: gunicorn bbonlai/wsgi.py
+web: gunicorn bbonlai.wsgi:application --log-file -
