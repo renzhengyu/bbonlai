@@ -1,0 +1,56 @@
+<section class="section">
+  <h1 class="title has-text-centered">
+    <b-icon
+      type="is-primary"
+      pack="fas" 
+      icon="{{ step.icon }}" 
+      size="is-small">
+    </b-icon> &nbsp;
+    {{ step.label }}</h1>
+</section>
+<section id="{{ step.label }}" class="section is-large">
+  <p class="label">In the last 12 months, how many items in each size have you purchased?</p>
+  <b-field grouped group-multiline class="section">
+
+<!-- b1 -->
+{% with field=form.b1 %}
+    <b-field 
+      label="{{ field.label }}" 
+      message="{{ field.help_text|safe }}" 
+      type="is-primary" 
+      label-position="on-border">
+        <b-numberinput 
+          name="{{ field.name }}" 
+          v-model="{{ field.name }}" 
+          min="0" 
+          max="99999" 
+          controls-position="compact" 
+          controls-rounded>
+        </b-numberinput>
+    </b-field>
+{% endwith %}
+
+<!-- b2 -->
+{% with field=form.b2 %}
+    <b-field  type="is-primary" label-position="on-border"
+              label="{{ field.label }}" 
+              message="{{ field.help_text|safe }}">
+        <b-numberinput  min="0" max="9999999" controls-position="compact" controls-rounded
+                        name="{{ field.name }}" 
+                        v-model="{{ field.name }}"></b-numberinput></b-field>
+{% endwith %}
+
+<!-- b3 -->
+{% with field=form.b3 %}
+	<b-field type="is-primary" label-position="on-border"
+		label="{{ field.label }}" 
+		message="{{ field.help_text|safe }}">
+		<b-numberinput min="0" max="999999999" controls-position="compact" controls-rounded
+			name="{{ field.name }}" 
+			v-model="{{ field.name }}">
+		</b-numberinput>
+	</b-field>
+{% endwith %}
+
+  </b-field>
+</section>

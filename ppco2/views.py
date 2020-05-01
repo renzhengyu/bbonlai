@@ -1,9 +1,6 @@
 from django.shortcuts import render
-from django.db.models import Q, Count
 from .models import Calculation
-from .forms import CfpForm1, CfpForm2, CfpForm3, CfpForm4, CfpForm5, CfpForm6, CfpForm7
-from formtools.wizard.views import SessionWizardView
-from collections import ChainMap
+from .forms import CfpVueForm, CfpForm
 import json
 from django.http.response import JsonResponse
 
@@ -42,43 +39,6 @@ def carbonfp(a):
 
 def planets(carbonfp):
     return carbonfp/3
-
-
-class CfpWizard(SessionWizardView):
-    form_list = [
-        CfpForm1,
-        CfpForm2,
-        CfpForm3,
-        CfpForm4,
-        CfpForm5,
-        CfpForm6,
-        CfpForm7
-    ]
-    template_name = 'ppcfpcal.html'
-
-    def get(self, request, *args, **kwargs):
-        try:
-            return self.render(self.get_form())
-        except KeyError:
-            return super().get(request, *args, **kwargs)
-
-    def done(self, form_list, **kwargs):
-        form_data = [form.cleaned_data for form in form_list]
-        form_data_dict = dict(ChainMap(*form_data))
-        cfp = carbonfp(form_data_dict)
-        cal = Calculation(**form_data_dict)
-        cal.cfp = cfp
-        cal.planets = planets(cfp)
-        cal.save()
-        total_submission = Calculation.objects.count()
-        context = {
-            'cfp': cal.cfp,
-            'form_data': form_data_dict,
-            'planets': cal.planets,
-            'pk': cal.pk,
-            'total_submission': total_submission,
-        }
-        return render(self.request, 'result.html', context)
 
 
 def planet_chart(request):
@@ -130,3 +90,32 @@ def planet_chart_data(request):
     }
 
     return JsonResponse(chart)
+
+
+def cfp_vue(request):
+    if request.method == 'POST':
+        print(request.POST)
+        form = CfpForm(request.POST)
+        if form.is_valid():
+            cfp = carbonfp(form.cleaned_data)
+            cal = Calculation(**form.cleaned_data)
+            cal.cfp = cfp
+            cal.planets = planets(cfp)
+            cal.save()
+            total_submission = Calculation.objects.count()
+            context = {
+                'cfp': cal.cfp,
+                'form_data': form.cleaned_data,
+                'planets': cal.planets,
+                'pk': cal.pk,
+                'total_submission': total_submission,
+            }
+            return render(request, 'result.html', context)
+    else:
+        form = CfpForm()
+        vue_form = CfpVueForm()
+        context = {
+            'form': form,
+            "vue_form": vue_form,
+        }
+    return render(request, 'ppcfpcal.html', context)

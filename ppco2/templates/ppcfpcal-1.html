@@ -1,0 +1,39 @@
+<section class="section">
+  <h1 class="title has-text-centered">
+    <b-icon
+      type="is-primary"
+      pack="fas"
+      icon="{{ step.icon }}"
+      size="is-small">
+    </b-icon> &nbsp;
+    {{ step.label }}
+  </h1>
+</section>
+<section id="{{ step.label }}" class="section is-large">
+
+<!-- name -->
+  {% with field=form.name %}
+  <b-field label="{{ field.label }}" message="{{ field.help_text|safe }}" type="is-primary" label-position="on-border">
+    <b-input name="{{ field.name }}" v-model="{{ field.name }}" maxlength="30"></b-input>
+  </b-field>
+  {% endwith %}
+
+
+
+<!-- email -->
+  {% with field=form.email %}
+  <b-field label="{{ field.label }}" message="{{ field.help_text|safe }}" type="is-primary" label-position="on-border">
+    <b-input type="email" name="{{ field.name }}" v-model="{{ field.name }}" maxlength="60"></b-input>
+  </b-field>
+  {% endwith %}
+
+
+<!-- offset -->
+  {% with field=form.offset %}
+  <cfp-numinput name="{{ field.name }}" label="{{ field.label }}" help_text="{{ field.help_text|safe }}" min="0" max="999999"></cfp-numinput>
+
+  {% comment %} <b-field label="{{ field.label }}" message="{{ field.help_text|safe }}" type="is-primary">
+    <b-numberinput name="{{ field.name }}" v-model="{{ field.name }}" min="0" max="999999" controls-position="compact" controls-rounded class="has-text-centered"></b-numberinput>
+  </b-field> {% endcomment %}
+  {% endwith %}
+</section>

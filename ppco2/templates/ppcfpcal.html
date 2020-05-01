@@ -3,109 +3,34 @@
 
 {% block content %}
 
-<div class="w3-container w3-center">
-<p>Step <span class="w3-badge w3-theme">{{ wizard.steps.step1 }}</span> of {{ wizard.steps.count }}</p>
-<h2>
-{% if wizard.steps.step1 == 1 %}<i class="material-icons">account_circle</i> About You
-{% elif wizard.steps.step1 == 2 %}<i class="material-icons">commute</i> Transportation
-{% elif wizard.steps.step1 == 3 %}<i class="material-icons">accessibility_new</i> Clothing
-{% elif wizard.steps.step1 == 4 %}<i class="material-icons">headset_mic</i> Electronics
-{% elif wizard.steps.step1 == 5 %}<i class="material-icons">local_dining</i> Food
-{% elif wizard.steps.step1 == 6 %}<i class="material-icons">power</i> Electricity
-{% elif wizard.steps.step1 == 7 %}<i class="material-icons">house</i> House
-{% endif %}</h2>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
-  $(document).ready(function() {
-    $('#id_3-c1').change(function()  {
-      x = document.getElementById("id_3-c2").parentElement.parentElement
-      if(parseInt($(this).val()) === 0)
-        {x.style.display = "none";}
-      else {x.style.display = "";}
-    });
-
-    $('#id_3-c3').change(function()  {
-      x = document.getElementById("id_3-c4").parentElement.parentElement
-      if(parseInt($(this).val()) === 0)
-        {x.style.display = "none";}
-      else {x.style.display = "";}
-    });
-
-    $('#id_3-c5').change(function()  {
-      x = document.getElementById("id_3-c6").parentElement.parentElement
-      if(parseInt($(this).val()) === 0)
-        {x.style.display = "none";}
-      else {x.style.display = "";}
-    });
-
-    $('#id_3-c7').change(function()  {
-      x = document.getElementById("id_3-c8").parentElement.parentElement
-      if(parseInt($(this).val()) === 0)
-        {x.style.display = "none";}
-      else {x.style.display = "";}
-    });
-
-    $('input[name="6-f4"]').change(function()  {
-      x1 = document.getElementById("id_6-f1").parentElement.parentElement
-      x2 = document.getElementById("id_6-f2").parentElement.parentElement
-      x3 = document.getElementById("id_6-f3").parentElement.parentElement
-      x4 = document.getElementById("id_6-f5").parentElement.parentElement
-      if(parseInt($(this).val()) === 0) {
-        x1.style.display = "none"
-        x2.style.display = "none"
-        x3.style.display = "none"
-        x4.style.display = "none"
-      }
-      else {
-        x1.style.display = ""
-        x2.style.display = ""
-        x3.style.display = ""
-        x4.style.display = ""
-      }
-    });
-  });
-</script>
-
-
-<form action="" method="post">{% csrf_token %}
-  <table>{{ wizard.management_form }}
-  {% if wizard.form.forms %}
-    {{ wizard.form.management_form }}
-    {% for form in wizard.form.forms %}
-        {{ form }}
+<template>
+<form action="{% url 'ppco2:vue_form' %}" class="section" method="POST">
+  {% csrf_token %}
+  <b-steps v-model="activeStep">
+    {% for step in vue_form.steps %}
+      <b-step-item step="{{ step.id }}" label="{{ step.label }}" icon-pack="fas" icon="{{ step.icon }}" :clickable="true">
+        {% include step.template %}
+      </b-step-item>
     {% endfor %}
-  {% else %}
-    {% comment %} {{ wizard.form }} {% endcomment %}
-    <ul class="w3-ul w3-border-top">
-    {% for field in form %}
-      <li class="w3-text-theme">
-        <div class="w3-container w3-padding w3-text-theme">
-          {% if field.errors %}
-            <div class="w3-container w3-pink">
-                {{ field.errors }}
-            </div>{% endif %}
 
-          {{ field.label_tag }} {{ field }}
-
-          {% if field.help_text %}
-            <div class="w3-panel w3-pale-green">{{ field.help_text|safe }}</div>{% endif %}
-        </div>
-      </li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-  </table>
-
-  <div class="w3-container w3-center"><input class="w3-btn w3-theme w3-xlarge" type="submit" value="Next"/></div>
-  {% if wizard.steps.prev %}
-  <div class="w3-container w3-center">
-    <button class="w3-btn" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">First step</button>
-    <button class="w3-btn" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">Prev step</button>
-  </div>
-  {% endif %}
+    <template slot="navigation" slot-scope="{previous, next}">
+      <section class="section has-text-centered">
+        <b-button size="is-medium" outlined type="is-info"icon-pack="fas" icon-left="backward" :disabled="previous.disabled" @click.prevent="previous.action">
+          Previous
+        </b-button>
+        <b-button size="is-medium" outlined type="is-success" icon-pack="fas" icon-right="forward" :disabled="next.disabled" @click.prevent="next.action">
+          Next
+        </b-button>
+      </section>
+    </template>
+  </b-steps>
 </form>
+</template>
 
 
+{% endblock %}
+
+{% block vue %}
+  {% load static %}
+  <script src="{% static "ppcfpcal.js" %}"></script>
 {% endblock %}

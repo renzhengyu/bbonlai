@@ -1,0 +1,38 @@
+
+<section class="section">
+  <h1 class="title has-text-centered"><b-icon type="is-primary" pack="fas" icon="plug" size="is-small"></b-icon> Electricity</h1>
+</section>
+<section id="electricity" class="section is-large">
+  <section class="section">
+    <b-field label="Q1 - How much of your electricity needs are covered by your solar panels?">
+      <b-slider type="is-success" size="is-large" v-model="e1" :min="0" :max="100" ticks :step="5" :tooltip="false">
+        <b-slider-tick :value="0">None (0%)</b-slider-tick>
+        <b-slider-tick :value="25">Some (25%)</b-slider-tick>
+        <b-slider-tick :value="50">Half (50%)</b-slider-tick>
+        <b-slider-tick :value="75">Mostly (75%)</b-slider-tick>
+        <b-slider-tick :value="100">All (100%)</b-slider-tick>
+      </b-slider>
+    </b-field>
+    <input type="hidden" name="e1" v-model="e1"></input>
+  </section>
+  <section class="section">
+    <b-field label="Q2 - How much is your monthly electricity bill?" message="(in US$)" type="is-primary">
+      <b-numberinput name="e2" v-model="e2" min="0" max="10000" controls-position="compact" controls-rounded step="50" :disabled="isFullySolar"></b-numberinput>
+    </b-field>
+    <input v-if="isFullySolar" type="hidden" name="e2" v-model="e2"></input>
+    <b-field label="Q3 - What rate do you pay for electricity?" message="(in KHR/kWh)" type="is-primary">
+      <b-numberinput name="e6" v-model="e6" min="500" max="2500" controls-position="compact" controls-rounded step="50" :disabled="isFullySolar"></b-numberinput>
+    </b-field>
+    <input v-if="isFullySolar" type="hidden" name="e6" v-model="e6"></input>
+    <b-field label="Q4 - How many people share your living space and your electricity bill? " message="(family or roommates living in the same space, including yourself)" type="is-primary">
+      <b-numberinput name="e3" v-model="e3" min="1" max="2500" controls-position="compact" controls-rounded :disabled="isFullySolar"></b-numberinput>
+    </b-field>
+    <input v-if="isFullySolar" type="hidden" name="e3" v-model="e3"></input>
+    <b-field label="Q5 - How many hours/day do you spend in air-conditioning outside of your home?" message="(e.g. office, coffee shop...)" type="is-primary">
+      <b-numberinput name="e4" v-model="e4" min="0" max="24" controls-position="compact" controls-rounded></b-numberinput>
+    </b-field>
+    <b-field label="Q6 - Roughly how many people share this in total?" message="(including yourself. E.g. crowded coffee shop with 20 people, or small office with 4 people)" type="is-primary">
+      <b-numberinput name="e5" v-model="e5" min="1" max="2500" controls-position="compact" controls-rounded></b-numberinput>
+    </b-field>
+  </section>
+</section>

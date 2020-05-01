@@ -19,47 +19,48 @@ class Calculation(models.Model):
     )
     offset = models.PositiveIntegerField(
         default=0,
+        validators=[MaxValueValidator(0), MinValueValidator(999999)],
         verbose_name="How much did you offset in the last 12 months?",
         help_text="Offsets are measured in tonnes of carbon dioxide-equivalent (CO<sub>2</sub>e).",
     )
     a1 = models.PositiveIntegerField(
         default=5000,
-        verbose_name="Q1 - In the last 12 months, how far have you flown by plane? (km)",
+        verbose_name="Plane",
         help_text="",
     )
     a2 = models.PositiveIntegerField(
         default=100,
-        verbose_name="Q2 - by train? (km)",
+        verbose_name="Train",
         help_text="",
     )
     a3 = models.PositiveIntegerField(
         default=1000,
-        verbose_name="Q3 - by bus? (km)",
+        verbose_name="Bus",
         help_text="",
     )
     a4 = models.PositiveIntegerField(
         default=5000,
-        verbose_name="Q4 - by car? (km)",
+        verbose_name="Car",
         help_text="",
     )
     a5 = models.PositiveIntegerField(
         default=5000,
-        verbose_name="Q5 - by moto? (km)",
+        verbose_name="Moto",
         help_text="",
     )
     b1 = models.PositiveSmallIntegerField(
         default=120,
-        verbose_name="Q1 - In the last 12 months, how many SMALL items have you purchased?",
+        verbose_name="Small",
         help_text="(e.g. socks, undies...)",
     )
     b2 = models.PositiveSmallIntegerField(
         default=48,
-        verbose_name="Q2 - MEDIUM-sized items?",
+        verbose_name="Medium",
         help_text="(e.g. t-shirts, dresses...)",
     )
     b3 = models.PositiveSmallIntegerField(
         default=6,
-        verbose_name="Q3 - LARGE items?",
+        verbose_name="Large",
         help_text="(e.g. jeans, coats...)",
     )
     c1 = models.PositiveSmallIntegerField(

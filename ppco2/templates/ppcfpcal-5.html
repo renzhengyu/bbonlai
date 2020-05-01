@@ -1,0 +1,66 @@
+
+<section class="section">
+  <h1 class="title has-text-centered"><b-icon type="is-primary" pack="fas" icon="utensils" size="is-small"></b-icon> Food</h1>
+  <div class="has-text-centered">
+    <b-switch type="is-success" size="is-medium" v-on:change.native="turnVegan" v-model="isVegan">I'm vegan</b-switch>
+  </div>
+</section>
+<section id="food" class="section is-large">
+  <h3 class="subtitle is-5">How much of each food do you eat per week?</h3>
+  
+  <b-field grouped group-multiline>
+    <b-field label="BEEF" message=" " type="is-primary" label-position="on-border">
+      <b-numberinput name="d1" v-model="d1" min="0" max="9999999" step="50" controls-position="compact" controls-rounded></b-numberinput>
+    </b-field>
+    <b-field label="PORK" message=" " type="is-primary" label-position="on-border">
+      <b-numberinput name="d2" v-model="d2" min="0" max="9999999" step="50" controls-position="compact" controls-rounded></b-numberinput>
+    </b-field>
+    <b-field label="CHICKEN" message="(On average, Americans eat 500 grams of chicken per week.)" type="is-primary" label-position="on-border">
+      <b-numberinput name="d3" v-model="d3" min="0" max="9999999" step="50" controls-position="compact" controls-rounded></b-numberinput>
+    </b-field>
+    <b-field label="FISH" message=" " type="is-primary" label-position="on-border">
+      <b-numberinput name="d4" v-model="d4" min="0" max="9999999" step="50" controls-position="compact" controls-rounded></b-numberinput>
+    </b-field>
+    <b-field label="CHEESE" message=" " type="is-primary" label-position="on-border">
+      <b-numberinput name="d5" v-model="d5" min="0" max="9999999" step="50" controls-position="compact" controls-rounded></b-numberinput>
+    </b-field>
+    <b-field label="DAIRY" message="(e.g. milk, yogurt, ice-cream...)" type="is-primary" label-position="on-border">
+      <b-numberinput name="d6" v-model="d6" min="0" max="9999999" step="50" controls-position="compact" controls-rounded></b-numberinput>
+    </b-field>
+    <b-field label="EGGS" message=" " type="is-primary" label-position="on-border">
+      <b-numberinput name="d7" v-model="d7" min="0" max="9999999" controls-position="compact" controls-rounded></b-numberinput>
+    </b-field>
+  </b-field>
+  <b-field label="Grains, Vegetables and Fruit" message="" type="is-primary">
+    <b-numberinput name="d8" v-model="d8" min="0" max="9999999" step="100" controls-position="compact" controls-rounded></b-numberinput>
+  </b-field>
+  <h3 class="subtitle is-5">Do you eat a lot of local food? Or imported?</h3>
+  <b-field label="LOCAL food (<500km)" message="(e.g. unprocessed or minimally processed food from a wet market)">
+    <div class="columns">
+      <div class="column"><b-radio v-model="d9" name="d9" native-value="0">None (0%)</b-radio></div>
+      <div class="column"><b-radio v-model="d9" name="d9" native-value="25">Some (25%)</b-radio></div>
+      <div class="column"><b-radio v-model="d9" name="d9" native-value="50">Half (50%)</b-radio></div>
+      <div class="column"><b-radio v-model="d9" name="d9" native-value="75">Mostly (75%)</b-radio></div>
+      <div class="column"><b-radio v-model="d9" name="d9" native-value="100">All (100%)</b-radio></div>
+    </div>
+  </b-field>
+  <b-field label="NEAR Imported (<5000km)" message="(e.g. processed food from Thailand or China)">
+    <div class="columns">
+      <div class="column"><b-radio v-model="da" name="da" native-value="0">None (0%)</b-radio></div>
+      <div class="column"><b-radio v-model="da" name="da" native-value="25" :disabled="d9>75">Some (25%)</b-radio></div>
+      <div class="column"><b-radio v-model="da" name="da" native-value="50" :disabled="d9>50">Half (50%)</b-radio></div>
+      <div class="column"><b-radio v-model="da" name="da" native-value="75" :disabled="d9>25">Mostly (75%)</b-radio></div>
+      <div class="column"><b-radio v-model="da" name="da" native-value="100" :disabled="d9>0">All (100%)</b-radio></div>
+    </div>
+  </b-field>
+  <b-field label="FAR Imported (5000+km)" message="(e.g. imported from Europe, Australia, US...)">
+    <div class="columns">
+      <div class="column"><b-radio v-model="db" native-value="0" disabled>None (0%)</b-radio></div>
+      <div class="column"><b-radio v-model="db" native-value="25" disabled>Some (25%)</b-radio></div>
+      <div class="column"><b-radio v-model="db" native-value="50" disabled>Half (50%)</b-radio></div>
+      <div class="column"><b-radio v-model="db" native-value="75" disabled>Mostly (75%)</b-radio></div>
+      <div class="column"><b-radio v-model="db" native-value="100" disabled>All (100%)</b-radio></div>
+    </div>
+  </b-field> 
+  <input type="hidden" name="db" v-model="db"></input>
+</section>
