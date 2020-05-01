@@ -5,9 +5,6 @@ from django.core.exceptions import ValidationError
 
 
 class Calculation(models.Model):
-    submit_time = models.DateTimeField(auto_now=True)
-    cfp = models.FloatField()
-    planets = models.FloatField()
     name = models.CharField(
         max_length=30,
         default='Anonymous PP-er',
@@ -49,17 +46,17 @@ class Calculation(models.Model):
     )
     b1 = models.PositiveSmallIntegerField(
         default=120,
-        verbose_name="Q1 - In the last 12 months, how many SMALL items have you purchased?",
+        verbose_name="Q1 - In the last 12 months, how many NEW SMALL items have you purchased?",
         help_text="(e.g. socks, undies...)",
     )
     b2 = models.PositiveSmallIntegerField(
         default=48,
-        verbose_name="Q2 - MEDIUM-sized items?",
+        verbose_name="Q2 - NEW MEDIUM-sized items?",
         help_text="(e.g. t-shirts, dresses...)",
     )
     b3 = models.PositiveSmallIntegerField(
         default=6,
-        verbose_name="Q3 - LARGE items?",
+        verbose_name="Q3 - NEW LARGE items?",
         help_text="(e.g. jeans, coats...)",
     )
     c1 = models.PositiveSmallIntegerField(
@@ -214,6 +211,7 @@ class Calculation(models.Model):
     )
     f2 = models.PositiveSmallIntegerField(
         default=20,
+        validators=[MinValueValidator(1)],
         verbose_name="Q3 - How long do you think the house will be around? (in years)",
         help_text="",
     )
@@ -240,11 +238,71 @@ class Calculation(models.Model):
         verbose_name="Q5 - How many people live in the house on average per year?",
         help_text="",
     )
+    submit_time = models.DateTimeField(auto_now=True)
+    cfp = models.FloatField(editable=False)
+    planets = models.FloatField(editable=False)
 
     def clean(self):
+        super().clean()
         if self.d9+self.da+self.db != 100:
             raise ValidationError({
                 'd9': "Proportions don't add up to 100%.",
                 'da': "Proportions don't add up to 100%.",
                 'db': "Proportions don't add up to 100%.",
             })
+
+    def save(self, *args, **kwargs):
+        tranportation = (
+            self.a1 * 0.18 +            # plane
+            self.a2 * 0.06 +            # train
+            self.a3 * 0.09 +            # bus
+            self.a4 * 0.30 +            # car
+            self.a5 * 0.26)            # moto
+        clothes = (
+            self.b1 * 4.72 +            # small items
+            self.b2 * 11.80 +           # medium items
+            self.b3 * 47.19)          # large items
+        appliances = (
+            self.c1 * 15 / self.c2 +    # very small appliances / their users
+            self.c3 * 30 / self.c4 +    # small appliances / their users
+            self.c5 * 300 / self.c6 +   # medium appliances / their users
+            self.c7 * 1500 / self.c8)   # large appliances / their users
+        food = (
+            self.d1 * 0.027 * 52 +      # beef
+            self.d2 * 0.012 * 52 +      # port
+            self.d3 * 0.0069 * 52 +     # chicken
+            self.d4 * 0.01 * 52 +       # fish
+            self.d5 * 0.0135 * 52 +     # cheese
+            self.d6 * 0.002 * 52 +      # dairy
+            self.d7 * 0.2 * 52 +        # eggs
+            self.d8 * 0.001 * 52 +      # grains and veg
+            self.d9 * 9.3 / 100 +       # <500km
+            self.da * 93 / 100 +        # <5000km
+            self.db * 223.2 / 100)      # >= 5000km
+        electricity = (
+            self.e1 * 0.05 * (self.e2 * 4000/self.e6)/100 +
+            self.e2 * (4000/self.e6) * 0.5 * ((100-self.e1)/100)*12 / self.e3 +
+            self.e4 * self.e2 / self.e5)
+        house = (self.f4 * self.f3 / (self.f1 + self.f2) / self.f5)
+        self.cfp = (
+            tranportation +
+            clothes +
+            appliances +
+            food +
+            electricity +
+            house
+        ) / 1000 - self.offset  # kg => ton, deduct offset
+        self.planets = self.cfp / 3
+        super(Calculation, self).save(*args, **kwargs)
+
+    class Meta:
+        ordering = [
+            'name', 'email', 'offset',
+            'a1', 'a2', 'a3', 'a4', 'a5',
+            'b1', 'b2', 'b3',
+            'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8',
+            'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9', 'da', 'db',
+            'e1', 'e2', 'e3', 'e4', 'e5', 'e6',
+            'f4', 'f1', 'f2', 'f3', 'f5',
+            'cfp', 'planets'
+        ]
