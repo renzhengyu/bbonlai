@@ -54,11 +54,10 @@ WSGI_APPLICATION = 'bbonlai.wsgi.application'
 if os.environ.get('DATABASE_URL'):
     default_db = dj_database_url.config(default=os.environ['DATABASE_URL'])
 else:
-    default_db = db_config.local_db
+    default_db = db_config.heroku
 
 DATABASES = {
-    "default": default_db,
-    "test": db_config.local_db
+    "default": default_db
 }
 
 AUTH_PASSWORD_VALIDATORS = [
