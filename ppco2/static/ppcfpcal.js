@@ -44,6 +44,7 @@ new Vue({
     f5: 4,
 
     activeStep: 0,
+    submitClicked: false,
   },
 
   computed: {
@@ -87,6 +88,10 @@ new Vue({
       this.d5 = 0;
       this.d6 = 0;
       this.d7 = 0;
+    },
+
+    loadResult: function (event) {
+      this.submitClicked = true;
     },
   },
 });

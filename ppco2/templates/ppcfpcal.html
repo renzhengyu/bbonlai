@@ -37,7 +37,7 @@
         <b-button v-if="!next.disabled" size="is-medium" outlined type="is-success" icon-pack="fas" icon-right="forward" :disabled="next.disabled" @click.prevent="next.action">
           Next
         </b-button>
-        <b-button v-if="next.disabled" native-type="submit" size="is-medium" outlined type="is-primary" icon-pack="fas" icon-right="paper-plane">
+        <b-button v-if="next.disabled" native-type="submit" size="is-medium" outlined type="is-primary" icon-pack="fas" icon-right="paper-plane" @click="loadResult" :loading="submitClicked">
           Submit
         </b-button>
       </section>
