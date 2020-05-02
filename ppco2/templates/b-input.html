@@ -1,0 +1,19 @@
+<b-field 
+    label="{{ field.label }}" 
+    {% if field.errors %}
+        type="is-danger"
+        message="{{ field.errors }}"
+    {% else %}
+        message="{{ field.help_text|safe }}"
+    {% endif %}
+    type="is-primary" 
+    label-position="on-border">
+    <b-input
+        {% if field.name == "email" %}
+            type="email"
+        {% endif %}
+        name="{{ field.name }}" 
+        v-model="{{ field.name }}" 
+        maxlength="{{ field.maxlength }}">
+    </b-input>
+</b-field>

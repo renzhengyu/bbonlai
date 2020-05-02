@@ -1,19 +1,3 @@
-Vue.component("cfp-numinput", {
-  props: ["name", "label", "help_text", "min", "max"],
-  template: `
-    <b-field type="is-primary" label-position="on-border"
-        label="[[ label ]]"
-        message="[[ help_text ]]">
-          <b-numberinput controls-position="compact" controls-rounded
-            name="[[ name ]]" 
-            v-model="[[ name ]]" 
-            min="[[ min ]]" 
-            max="[[ max ]]">
-          </b-numberinput>
-    </b-field>
-  `,
-});
-
 new Vue({
   delimiters: ["[[", "]]"],
   el: "#app",
@@ -80,7 +64,7 @@ new Vue({
     },
 
     isFullySolar: function () {
-      return this.e1 === 100;
+      return this.e1 > 99;
     },
 
     isWoodHouse: function () {

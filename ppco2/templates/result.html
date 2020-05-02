@@ -1,24 +1,96 @@
 {% extends "base.html" %}
-{% block title %}Carbon Footprint Calculator - Phnom Penh{% endblock %}
 
 {% block content %}
-<div class="w3-container w3-center">
-  <div class="w3-padding-32">Submission #{{cal.pk}}</div>
-  <div class="w3-row">
-    <div class="w3-container w3-quarter"></div>
-    <div class="w3-container w3-half">
-      <div class="w3-card-4 w3-theme w3-padding">
-        <p>In the past 12 months, you emitted</p>
-        <div class="w3-jumbo w3-animate-zoom">{{ cal.cfp|floatformat:1 }}</div>
-        <p>tonnes of CO<sub>2</sub>.</p>
-        <p>If everyone lived like you, we would need<span class="w3-badge w3-red"> {{ cal.planets|floatformat:1 }} </span>planets.</p>
+
+<section class="section">
+<div class="container">
+<div class="tile is-ancestor">
+  <div class="tile is-vertical is-8">
+    <div class="tile">
+      <div class="tile is-parent is-vertical">
+        <article class="tile is-child notification is-primary">
+          <p class="title has-text-centered">{{ cal.cfp|floatformat:1 }} tonne{{ cal.cfp|pluralize }}</p>
+          <p class="content">That's how much CO<sub>2</sub>-equivalent you emitted in the past 12 months.</p>
+        </article>
+        <article class="tile is-child notification is-danger">
+          <p class="title has-text-centered">{{ cal.planets|floatformat:1 }} planet{{ cal.planets|pluralize }}</p>
+          <p class="content">If everyone lived like you, we would need so many planets.</p>
+        </article>
       </div>
-      <div class="w3-padding-32"><a href="{% url 'ppco2:formseven' %}">Calculate Again</a></div>
-      <div id="planet-chart" class="w3-padding-32">
-        {% include "planet-chart.html" %}
-      </div>    
+      <div class="tile is-parent">
+        <article class="tile is-child notification is-info">
+          <p class="title">Submission #{{cal.pk}}</p>
+          <p class="subtitle">{{ cal.name }}</p>
+          <div class="content has-text-centered">
+            <p>{{ cal.submit_time }}</p>
+            <p class="has-text-centered">
+              <b-button tag="a" href="{% url 'ppco2:vue_form' %}" type="is-info" size="is-large" inverted>Calculate Again</b-button>
+            </p>
+          </div>
+        </article>
+      </div>
     </div>
-    <div class="w3-container w3-quarter"></div>
+    <div class="tile is-parent">
+      <article class="tile is-child notification is-success">
+        <p class="title">Analysis</p>
+        <p class="subtitle">Let's see how we did it</p>
+        <div class="content">
+          {% include "planet-chart.html" %}
+        </div>
+      </article>
+    </div>
+  </div>
+  <div class="tile is-parent">
+    <article class="tile is-child notification is-primary">
+      <div class="content">
+        <p class="title">What Next?</p>
+        <p class="subtitle">Advice from Irina</p>
+        <div class="content">
+          <p>Hi, {{ cal.name }},</p>
+          <p>Thanks for using this Carbon Footprint calculator. 
+          Your submission is #{{cal.pk}} from {{total_submission}} submission{{total_submission|pluralize}}.
+          </p>
+          <p>Irina will identify scenarios and offer advice.</p>
+          <p class="subtitle">Limitations</p>
+          <p>Irina will add Limitations.</p>
+          <b-collapse :open="false" position="is-bottom" aria-id="contentIdForA11y1">
+            <a slot="trigger" slot-scope="props" aria-controls="contentIdForA11y1">
+                <b-icon :icon="!props.open ? 'menu-down' : 'menu-up'"></b-icon>
+                [[ !props.open ? 'See Limitations' : 'See Less Limitations' ]]
+            </a>
+            {% lorem 1 p %}
+        </b-collapse>
+          <p class="subtitle">References</p>
+          <p>Irina will add References.</p>
+          <b-collapse :open="false" position="is-bottom" aria-id="contentIdForA11y1">
+            <a slot="trigger" slot-scope="props" aria-controls="contentIdForA11y1">
+                <b-icon :icon="!props.open ? 'menu-down' : 'menu-up'"></b-icon>
+                [[ !props.open ? 'See References' : 'See Less References' ]]
+            </a>
+            {% lorem 1 p %}
+        </b-collapse>
+        </div>
+      </div>
+    </article>
   </div>
 </div>
+</div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {% endblock %}

@@ -1,47 +1,23 @@
-<section class="section">
-  <h1 class="title has-text-centered">
-    <b-icon type="is-primary" 
-            pack="fas" 
-            icon="laptop" 
-            size="is-small">
-    </b-icon> &nbsp;
-    Electronics
-  </h1>
-</section>
-<section id="electronics" class="section is-large">
-  <p class="label">In the last 12 months, how many appliances in each size have you purchased? How many users share them?</p>
-  <section class="secion" class="section">
-    <b-field grouped group-multiline>
-      <b-field label="very small appliance" message="(e.g. earphones, computer mouse...)" type="is-primary" label-position="on-border">
-        <b-numberinput name="c1" v-model="c1" min="0" controls-position="compact" controls-rounded></b-numberinput>
-      </b-field>
-      <b-field label="users" type="is-primary" message="" label-position="on-border">
-        <b-numberinput name="c2" v-model="c2" min="1" max="9999" controls-position="compact" controls-rounded :disabled="c1 === 0"></b-numberinput>
-      </b-field>
-    </b-field>
-    <b-field grouped group-multiline>
-      <b-field label="small appliance" message="(e.g. kettle, toaster, iron, speakers...)" type="is-primary" label-position="on-border">
-        <b-numberinput name="c3" v-model="c3" min="0" controls-position="compact" controls-rounded></b-numberinput>
-      </b-field>
-      <b-field label="users" type="is-primary" message="" label-position="on-border">
-        <b-numberinput name="c4" v-model="c4" min="1" max="9999" controls-position="compact" controls-rounded :disabled="c3 === 0"></b-numberinput>
-      </b-field>
-    </b-field>
-    <b-field grouped group-multiline>
-      <b-field label="medium appliance" message="(e.g. laptop, monitor, small fridge, desktop computer...)" type="is-primary" label-position="on-border">
-        <b-numberinput name="c5" v-model="c5" min="0" controls-position="compact" controls-rounded></b-numberinput>
-      </b-field>
-      <b-field label="users" type="is-primary" message="" label-position="on-border">
-        <b-numberinput name="c6" v-model="c6" min="1" max="9999" controls-position="compact" controls-rounded :disabled="c5 === 0"></b-numberinput>
-      </b-field>
-    </b-field>
-    <b-field grouped group-multiline>
-      <b-field label="large appliance" message="(e.g. washing machine, large fridge...)" type="is-primary" label-position="on-border">
-        <b-numberinput name="c7" v-model="c7" min="0" controls-position="compact" controls-rounded></b-numberinput>
-      </b-field>
-      <b-field label="users" type="is-primary" message="" label-position="on-border">
-        <b-numberinput name="c8" v-model="c8" min="1" max="9999" controls-position="compact" controls-rounded :disabled="c7 === 0"></b-numberinput>
-      </b-field>
-    </b-field>
+<section id="{{ step.label }}" class="section">
+  <p class="label">
+    In the last 12 months, how many NEW appliances in each size have you purchased? How many users share them?
+  </p>
+  <section class="section">
+    <div class="columns section">
+      <div class="column">{% include "b-numberinput.html" with field=form.c1 %}</div>
+      <div class="column">{% include "b-numberinput.html" with field=form.c2 min=1 %}</div>
+    </div>
+    <div class="columns section">
+      <div class="column">{% include "b-numberinput.html" with field=form.c3 %}</div>
+      <div class="column">{% include "b-numberinput.html" with field=form.c4 min=1 %}</div>
+    </div>
+    <div class="columns section">
+      <div class="column">{% include "b-numberinput.html" with field=form.c5 %}</div>
+      <div class="column">{% include "b-numberinput.html" with field=form.c6 min=1 %}</div>
+    </div>
+    <div class="columns section">
+      <div class="column">{% include "b-numberinput.html" with field=form.c7 %}</div>
+      <div class="column">{% include "b-numberinput.html" with field=form.c8 min=1 %}</div>
+    </div>
   </section>
 </section>

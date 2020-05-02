@@ -1,0 +1,25 @@
+<b-field
+    label="{{ field.label }}" 
+    {% if field.errors %}
+        type="is-danger"
+        message="{{ field.errors }}"
+    {% else %}
+        message="{{ field.help_text|safe }}" 
+    {% endif %}
+    {% if field.label|wordcount < 4 %}label-position="on-border"{% endif %}
+    type="is-primary">
+    <b-numberinput 
+        name="{{ field.name }}" 
+        v-model="{{ field.name }}" 
+        min="{{ min|default:0 }}" 
+        max="{{ max|default:999999 }}"
+        step="{{ interval|default:1 }}"
+        {% if disabled %}:disabled="{{ disabled }}"{% endif %}
+        controls-position="compact" 
+        controls-rounded 
+        class="has-text-centered">
+    </b-numberinput>
+</b-field>
+{% if disabled %}
+    <input v-if="{{ disabled }}" type="hidden" name="{{ field.name }}" v-model="{{ field.name }}"></input>
+{% endif %}

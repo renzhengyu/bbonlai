@@ -1,56 +1,48 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>{% block title %}{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
-    />
-    <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css" />
-  </head>
+<head>
+  <title>{% block title %}Carbon Footprint Calculator - Phnom Penh{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" />
+  <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css" />
+</head>
 
-  <body>
-    <div id="app">
-      {% block header %}
-      <header class="hero is-primary is-bold">
-        <div class="hero-body container has-text-centered">
-          <h1 class="title">
-            <b-icon pack="fab" icon="envira"></b-icon>
-            Carbon Footprint Calculator
-          </h1>
-          <h2 class="subtitle">
-            Customized for Phnom Penh and its residents
-          </h2>
-        </div>
-      </header>
-      {% endblock %} {% block content %}{% endblock %} {% block footer %}
-      <footer class="footer">
-        <div class="content is-small is-info has-text-centered">
-          <p>
-            This carbon footprinter is under test. See source code on
-            <a href="https://github.com/renzhengyu/bbonlai" target="_blank">
-              <img
-                width="38"
-                alt="GitHub Logotype"
-                src="https://github.githubassets.com/images/modules/logos_page/GitHub-Logo.png"
-            /></a>
-          </p>
-          <p>
-            <a href="https://www.facebook.com/bongbonlai" target="_blank"
-              >Bong Bonlai</a
-            >
-          </p>
-        </div>
-      </footer>
-      {% endblock %}
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-		<script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
-		{% block vue %}{% endblock %}
-  </body>
+<body>
+<div id="app">
+    <header class="hero is-primary is-bold">
+      <div class="hero-body container has-text-centered">
+        <h1 class="title is-size-4-mobile">
+          <b-icon pack="fab" icon="envira"></b-icon>
+          Carbon Footprint Calculator
+        </h1>
+        <h2 class="subtitle is-size-7-mobile">
+          Customized for Phnom Penh and its residents
+        </h2>
+      </div>
+    </header>
+
+    {% block content %}{% endblock %}
+
+
+    <footer class="footer">
+      <div class="content is-small is-info has-text-centered">
+        <p>This carbon footprinter is under test. See source code on
+          <a href="https://github.com/renzhengyu/bbonlai" target="_blank">
+            <img width="38" alt="GitHub Logotype" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Logo.png" />
+          </a>
+        </p>
+        <p><a href="https://www.facebook.com/bongbonlai" target="_blank">Bong Bonlai</a></p>
+      </div>
+    </footer>
+</div>  
+
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+{% load static %}
+<script src="{% static "ppcfpcal.js" %}"></script>
+<script src="{% static "planet-chart.js" %}"></script>
+
+</body>
 </html>

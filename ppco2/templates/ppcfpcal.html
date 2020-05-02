@@ -1,14 +1,30 @@
 {% extends "base.html" %}
-{% block title %}Carbon Footprint Calculator - Phnom Penh{% endblock %}
 
 {% block content %}
-
 <template>
 <form action="{% url 'ppco2:vue_form' %}" class="section" method="POST">
   {% csrf_token %}
   <b-steps v-model="activeStep">
     {% for step in vue_form.steps %}
-      <b-step-item step="{{ step.id }}" label="{{ step.label }}" icon-pack="fas" icon="{{ step.icon }}" :clickable="true">
+      <b-step-item
+        step="{{ step.id }}" 
+        label="{{ step.label }}" 
+        icon-pack="fas" 
+        icon="{{ step.icon }}" 
+        :clickable="true">
+        {% comment %} 
+          <section class="section">
+            <h1 class="title has-text-centered">
+              <b-icon
+                type="is-primary"
+                pack="fas"
+                icon="{{ step.icon }}"
+                size="is-small">
+              </b-icon> &nbsp;
+              {{ step.label }}
+            </h1>
+          </section>
+        {% endcomment %}
         {% include step.template %}
       </b-step-item>
     {% endfor %}
@@ -18,19 +34,15 @@
         <b-button size="is-medium" outlined type="is-info"icon-pack="fas" icon-left="backward" :disabled="previous.disabled" @click.prevent="previous.action">
           Previous
         </b-button>
-        <b-button size="is-medium" outlined type="is-success" icon-pack="fas" icon-right="forward" :disabled="next.disabled" @click.prevent="next.action">
+        <b-button v-if="!next.disabled" size="is-medium" outlined type="is-success" icon-pack="fas" icon-right="forward" :disabled="next.disabled" @click.prevent="next.action">
           Next
+        </b-button>
+        <b-button v-if="next.disabled" native-type="submit" size="is-medium" outlined type="is-primary" icon-pack="fas" icon-right="paper-plane">
+          Submit
         </b-button>
       </section>
     </template>
   </b-steps>
 </form>
 </template>
-
-
-{% endblock %}
-
-{% block vue %}
-  {% load static %}
-  <script src="{% static "ppcfpcal.js" %}"></script>
 {% endblock %}

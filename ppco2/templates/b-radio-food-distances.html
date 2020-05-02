@@ -1,0 +1,81 @@
+<b-message type=
+{% if field.name == "d9" %}
+    "is-success"
+{% elif field.name == "da" %}
+    "is-info"
+{% else %}
+    "is-danger"
+{% endif %}>
+
+
+<b-field label="{{ field.label }}" message="{{ field.help_text|safe }}">
+    <div class="columns">
+        <div class="column">
+            <b-radio 
+                v-model="{{ field.name }}" 
+                name="{{ field.name }}" 
+                native-value="0"
+                {% if field.name == "db" %}
+                    disabled
+                {% endif %}>
+                None (0%)
+                </b-radio>
+        </div>
+        <div class="column">
+            <b-radio 
+                v-model="{{ field.name }}" 
+                name="{{ field.name }}" 
+                native-value="25"
+                {% if field.name == "db" %}
+                    disabled
+                {% elif field.name == "da" %}
+                    :disabled="d9>75"
+                {% endif %}>
+                Some (25%)
+                </b-radio>
+        </div>
+        <div class="column">
+            <b-radio 
+                v-model="{{ field.name }}" 
+                name="{{ field.name }}" 
+                native-value="50"
+                {% if field.name == "db" %}
+                    disabled
+                {% elif field.name == "da" %}
+                    :disabled="d9>50"
+                {% endif %}>
+                Half (50%)
+                </b-radio>
+        </div>
+        <div class="column">
+            <b-radio 
+                v-model="{{ field.name }}" 
+                name="{{ field.name }}" 
+                native-value="75"
+                {% if field.name == "db" %}
+                    disabled
+                {% elif field.name == "da" %}
+                    :disabled="d9>25"
+                {% endif %}>
+                Mostly (75%)
+                </b-radio>
+        </div>
+        <div class="column">
+            <b-radio 
+                v-model="{{ field.name }}" 
+                name="{{ field.name }}" 
+                native-value="100"
+                {% if field.name == "db" %}
+                    disabled
+                {% elif field.name == "da" %}
+                    :disabled="d9>0"
+                {% endif %}>
+                All (100%)
+                </b-radio>
+        </div>
+    </div>
+</b-field>
+</b-message>
+{% if field.name == "db" %}
+    <input type="hidden" name="db" v-model="db"></input>
+{% endif %}

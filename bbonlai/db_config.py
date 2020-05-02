@@ -7,6 +7,7 @@ heroku = {
     "PORT": "5432",
 }
 
+# local_db ?
 local_db = {
     "ENGINE": "django.db.backends.postgresql_psycopg2",
     "NAME": "bbonlai",

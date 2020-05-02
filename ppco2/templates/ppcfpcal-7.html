@@ -1,32 +1,15 @@
-<section class="section">
-  <h1 class="title has-text-centered"><b-icon type="is-primary" pack="fas" icon="home" size="is-small"></b-icon> House</h1>
-</section>
+<section id="{{ step.label }}" class="section">
 
-<section id="house" class="section is-large">
   <b-field label="Q1 - What is your house primarily made of?">
     <div class="has-text-centered">
       <b-radio v-model="f4" name="f4" native-value="0">Wood</b-radio>
       <b-radio v-model="f4" name="f4" native-value="1000">Bricks and concrete</b-radio>
     </div>
   </b-field>
-  <b-field label="Q2 - How old is your house?" message="(in years)" type="is-primary">
-    <b-numberinput name="f1" v-model="f1" min="1" max="2500" controls-position="compact" controls-rounded :disabled="isWoodHouse"></b-numberinput>
-  </b-field>
-  <input v-if="isWoodHouse" type="hidden" name="f1" v-model="f1"></input>
-  <b-field label="Q3 - How long do you think the house will be around?" message="(in years)" type="is-primary">
-    <b-numberinput name="f2" v-model="f2" min="0" max="2500" controls-position="compact" controls-rounded :disabled="isWoodHouse"></b-numberinput>
-  </b-field>
-  <input v-if="isWoodHouse" type="hidden" name="f2" v-model="f2"></input>
-  <b-field label="Q4 - How big is your house?" message="(in m<sup>2</sup>)" type="is-primary">
-    <b-numberinput name="f3" v-model="f3" min="0" max="2500" controls-position="compact" step="5" controls-rounded :disabled="isWoodHouse"></b-numberinput>
-  </b-field>
-  <input v-if="isWoodHouse" type="hidden" name="f3" v-model="f3"></input>
-  <b-field label="Q5 - How many people live in the house on average per year?" message="(including yourself)" type="is-primary">
-    <b-numberinput name="f5" v-model="f5" min="1" max="2500" controls-position="compact" controls-rounded :disabled="isWoodHouse"></b-numberinput>
-  </b-field>
-  <input v-if="isWoodHouse" type="hidden" name="f5" v-model="f5"></input>
-</section>
 
-<section id="submit" class="section is-large has-text-centered">
-  <b-button native-type="submit" type="is-primary is-large">Submit</b-button>
+  {% include "b-numberinput.html" with field=form.f1 disabled="isWoodHouse"%}
+  {% include "b-numberinput.html" with field=form.f2 min=1 disabled="isWoodHouse"%}
+  {% include "b-numberinput.html" with field=form.f3 disabled="isWoodHouse"%}
+  {% include "b-numberinput.html" with field=form.f5 min=1 disabled="isWoodHouse"%}
+  
 </section>

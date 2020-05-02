@@ -7,6 +7,15 @@ First app: ppco2: Carbon Footprint Calculator or PPers
 
 ## What's new:
 
+### v1.1-rc-buefy0.1.20200503
+
+- replacing django forms with buefy components
+- Need Irina's approval
+
+### v1.0
+
+- ready for public use, based on django forms
+
 ### v0.5
 
 - irina fixed an error in cfp formula

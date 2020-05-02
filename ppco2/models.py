@@ -16,9 +16,8 @@ class Calculation(models.Model):
     )
     offset = models.PositiveIntegerField(
         default=0,
-        validators=[MaxValueValidator(0), MinValueValidator(999999)],
         verbose_name="How much did you offset in the last 12 months?",
-        help_text="Offsets are measured in tonnes of carbon dioxide-equivalent (CO<sub>2</sub>e).",
+        help_text="In tonnes",
     )
     a1 = models.PositiveIntegerField(
         default=5000,
@@ -62,86 +61,86 @@ class Calculation(models.Model):
     )
     c1 = models.PositiveSmallIntegerField(
         default=10,
-        verbose_name="Q1 - How many VERY SMALL appliances have you purchased in the last 12 months?",
+        verbose_name="X Small",
         help_text="(e.g. earphones, computer mouse...)",
     )
     c2 = models.PositiveSmallIntegerField(
         default=1,
         validators=[MaxValueValidator(100), MinValueValidator(1)],
-        verbose_name="Q2 - How many users do they have?",
+        verbose_name="Users",
         help_text="",
     )
     c3 = models.PositiveSmallIntegerField(
         default=10,
-        verbose_name="Q3 - SMALL household appliances?",
+        verbose_name="Small",
         help_text="(e.g. kettle, toaster, iron, speakers...)",
     )
     c4 = models.PositiveSmallIntegerField(
         default=1,
         validators=[MaxValueValidator(100), MinValueValidator(1)],
-        verbose_name="Q4 - How many users do they have?",
+        verbose_name="Users",
         help_text="",
     )
     c5 = models.PositiveSmallIntegerField(
         default=20,
-        verbose_name="Q5 - MEDIUM-sized appliances?",
-        help_text="(e.g. laptop, monitor, small fridge, desktop computer...)",
+        verbose_name="Medium",
+        help_text="(e.g. laptop, monitor, small fridge...)",
     )
     c6 = models.PositiveSmallIntegerField(
         default=1,
         validators=[MaxValueValidator(100), MinValueValidator(1)],
-        verbose_name="Q6 - How many users do they have?",
+        verbose_name="Users",
         help_text="",
     )
     c7 = models.PositiveSmallIntegerField(
         default=10,
-        verbose_name="Q7 - LARGE appliances?",
+        verbose_name="Large",
         help_text="(e.g. washing machine, large fridge...)",
     )
     c8 = models.PositiveSmallIntegerField(
         default=1,
         validators=[MaxValueValidator(100), MinValueValidator(1)],
-        verbose_name="Q8 - How many users do they have?",
+        verbose_name="Users",
         help_text="",
     )
     d1 = models.PositiveSmallIntegerField(
         default=200,
-        verbose_name="Q1 - How many grams of BEEF do you eat per week?",
+        verbose_name="Beef",
         help_text="",
     )
     d2 = models.PositiveSmallIntegerField(
         default=200,
-        verbose_name="Q2 - PORK? (gram)",
+        verbose_name="Pork",
         help_text="",
     )
     d3 = models.PositiveSmallIntegerField(
         default=200,
-        verbose_name="Q3 - CHICKEN? (gram)",
-        help_text="(On average, Americans eat 500 grams of chicken per week.)",
+        verbose_name="Chicken",
+        help_text="",
     )
     d4 = models.PositiveSmallIntegerField(
         default=200,
-        verbose_name="Q4 - FISH? (gram)",
+        verbose_name="Fish",
         help_text="",
     )
     d5 = models.PositiveSmallIntegerField(
         default=100,
-        verbose_name="Q5 - CHEESE? (gram)",
+        verbose_name="Cheese",
         help_text="",
     )
     d6 = models.PositiveSmallIntegerField(
         default=100,
-        verbose_name="Q6 - DAIRY? (gram)",
+        verbose_name="Dairy",
         help_text="(e.g. milk, yogurt, ice-cream...)",
     )
     d7 = models.PositiveSmallIntegerField(
         default=14,
-        verbose_name="Q7 - Eggs? (ea)",
+        verbose_name="Eggs (ea)",
         help_text="",
     )
     d8 = models.PositiveSmallIntegerField(
-        default=300,
-        verbose_name="Q8 - Grains, vegetables, and fruit? (gram)",
+        default=2000,
+        verbose_name="Grains, Veges and Fruit",
         help_text="",
     )
 
@@ -154,19 +153,19 @@ class Calculation(models.Model):
 
     d9 = models.PositiveSmallIntegerField(
         default=FoodFraction.MOST,
-        verbose_name="Q9 - How much of your food comes from within 500 km?",
+        verbose_name="LOCAL food (<500km)",
         help_text="(e.g. unprocessed or minimally processed food from wet market)",
         choices=FoodFraction.choices
     )
     da = models.PositiveSmallIntegerField(
         default=FoodFraction.SOME,
-        verbose_name="Q10 - From 500-5000 km away?",
+        verbose_name="NEAR Imported (<5000km)",
         help_text="(e.g. processed food from Thailand or China)",
         choices=FoodFraction.choices
     )
     db = models.PositiveSmallIntegerField(
         default=FoodFraction.NONE,
-        verbose_name="Q11 - From more than 5000 km away?",
+        verbose_name="FAR Imported (5000+km)",
         help_text="(e.g. imported from Europe, Australia, US...)",
         choices=FoodFraction.choices
     )
@@ -185,7 +184,7 @@ class Calculation(models.Model):
     e3 = models.PositiveSmallIntegerField(
         default=1,
         verbose_name="Q4 - How many people do you share your living space and your electricity bill with?",
-        help_text="(family or roommates living in the same space)",
+        help_text="(family or roommates living in the same space, including yourself.)",
     )
     e4 = models.PositiveSmallIntegerField(
         default=8,
