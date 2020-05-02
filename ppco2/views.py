@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Count
 from .models import Calculation
 from .forms import CfpVueForm, CfpForm
 import json
@@ -41,27 +42,45 @@ def planets(carbonfp):
     return carbonfp/3
 
 
+class CfpWizard(SessionWizardView):
+    form_list = [
+        CfpForm1,
+        CfpForm2,
+        CfpForm3,
+        CfpForm4,
+        CfpForm5,
+        CfpForm6,
+        CfpForm7
+    ]
+    template_name = 'ppcfpcal.html'
+
+    def get(self, request, *args, **kwargs):
+        try:
+            return self.render(self.get_form())
+        except KeyError:
+            return super().get(request, *args, **kwargs)
+
+    def done(self, form_list, **kwargs):
+        form_data = [form.cleaned_data for form in form_list]
+        form_data_dict = dict(ChainMap(*form_data))
+        cal = Calculation.objects.create(**form_data_dict)
+        return redirect('ppco2:cal_result', pk=cal.pk)
+
+
 def planet_chart(request):
     return render(request, 'analysis.html')
 
 
 def planet_chart_data(request):
     data = {
-        'lte1': Calculation.objects.filter(planets__lte=1).count(),
-        'lte2': Calculation.objects.filter(planets__gt=1, planets__lte=2).count(),
-        'lte3': Calculation.objects.filter(planets__gt=2, planets__lte=3).count(),
-        'lte4': Calculation.objects.filter(planets__gt=3, planets__lte=4).count(),
-        'lte5': Calculation.objects.filter(planets__gt=4, planets__lte=5).count(),
-        'lte6': Calculation.objects.filter(planets__gt=5, planets__lte=6).count(),
-        'lte7': Calculation.objects.filter(planets__gt=6, planets__lte=7).count(),
-        'lte8': Calculation.objects.filter(planets__gt=7, planets__lte=8).count(),
-        'lte9': Calculation.objects.filter(planets__gt=8, planets__lte=9).count(),
-        'lte10': Calculation.objects.filter(planets__gt=9, planets__lte=10).count(),
-        'gt10': Calculation.objects.filter(planets__gt=10).count(),
+        'a': Calculation.objects.filter(planets__lte=0.9).count(),
+        'b': Calculation.objects.filter(planets__gt=0.9, planets__lte=1.3).count(),
+        'c': Calculation.objects.filter(planets__gt=1.3, planets__lte=2.5).count(),
+        'd': Calculation.objects.filter(planets__gt=2.5, planets__lte=4).count(),
+        'e': Calculation.objects.filter(planets__gt=4, planets__lt=7).count(),
+        'f': Calculation.objects.filter(planets__gt=7).count(),
     }
-
     total_submission = Calculation.objects.count()
-
     chart = {
         'chart': {'type': 'bar'},
         'title': {'text': 'Person-Planet Distribution'},
@@ -69,17 +88,12 @@ def planet_chart_data(request):
         'yAxis': {'title': {'text': 'Persons'}},
         'xAxis': {
             'categories': [
-                '1 planet or less',
-                '1~2 planets',
-                '2~3 planets',
-                '3~4 planets',
-                '4~5 planets',
-                '5~6 planets',
-                '6~7 planets',
-                '7~8 planets',
-                '8~9 planets',
-                '9~10 planets',
-                '>10 planets'
+                '0.9 planet or less',
+                '0.9~1.3 planets',
+                '1.3~2.5 planets',
+                '2.5~4 planets',
+                '4~7 planets',
+                '7 planets or more'
             ]
         },
         'series': [{
@@ -88,7 +102,6 @@ def planet_chart_data(request):
             'color': 'green'
         }],
     }
-
     return JsonResponse(chart)
 
 
@@ -119,3 +132,13 @@ def cfp_vue(request):
             "vue_form": vue_form,
         }
     return render(request, 'ppcfpcal.html', context)
+
+
+def cal_result(request, pk):
+    cal = get_object_or_404(Calculation, id=pk)
+    total_submission = Calculation.objects.count()
+    context = {
+        'cal': cal,
+        'total_submission': total_submission,
+    }
+    return render(request, 'result.html', context)

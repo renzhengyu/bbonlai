@@ -2,19 +2,23 @@
 {% block title %}Carbon Footprint Calculator - Phnom Penh{% endblock %}
 
 {% block content %}
-<div>Submission #{{pk}}</div>
-<div>In the past 12 months, you emitted {{ cfp|floatformat:1 }} tonnes of CO<sub>2</sub>.</div>
-<div>If everyone lived like you, we would need<span class="w3-badge w3-red"> {{ planets|floatformat:1 }} </span>planets.</div>
-<div><a href="{% url 'ppco2:vue_form' %}">Calculate Again</a></div>
-<div><a href="{% url 'ppco2:planet_chart' %}">Analysis</a></div>
-<p>{{form_data}}</p>
-{% endblock %}
-
-{% block vue %}
-<script>
-  new Vue({
-    delimiters: ["[[", "]]"],
-    el: "#app",
-  });
-</script>
+<div class="w3-container w3-center">
+  <div class="w3-padding-32">Submission #{{cal.pk}}</div>
+  <div class="w3-row">
+    <div class="w3-container w3-quarter"></div>
+    <div class="w3-container w3-half">
+      <div class="w3-card-4 w3-theme w3-padding">
+        <p>In the past 12 months, you emitted</p>
+        <div class="w3-jumbo w3-animate-zoom">{{ cal.cfp|floatformat:1 }}</div>
+        <p>tonnes of CO<sub>2</sub>.</p>
+        <p>If everyone lived like you, we would need<span class="w3-badge w3-red"> {{ cal.planets|floatformat:1 }} </span>planets.</p>
+      </div>
+      <div class="w3-padding-32"><a href="{% url 'ppco2:formseven' %}">Calculate Again</a></div>
+      <div id="planet-chart" class="w3-padding-32">
+        {% include "planet-chart.html" %}
+      </div>    
+    </div>
+    <div class="w3-container w3-quarter"></div>
+  </div>
+</div>
 {% endblock %}

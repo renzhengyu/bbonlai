@@ -7,6 +7,15 @@ First app: ppco2: Carbon Footprint Calculator or PPers
 
 ## What's new:
 
+### v0.5
+
+- irina fixed an error in cfp formula
+- result page takes result/id to make result page permenant
+- add test cases and test db server conf
+- include planet chart in result page, without removing analysis page
+- model include cfp and planet as computed fields
+- less cat planet chart
+
 ### v0.4
 
 - add offset
