@@ -13,7 +13,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'ppco2.apps.Ppco2Config',
     'formtools',
-    'django.contrib.admin',
+    # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -52,12 +52,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bbonlai.wsgi.application'
 
 if os.environ.get('DATABASE_URL'):
-    heroku = dj_database_url.config(default=os.environ['DATABASE_URL'])
+    default_db = dj_database_url.config(default=os.environ['DATABASE_URL'])
 else:
-    heroku = db_config.heroku
+    default_db = db_config.heroku
 
 DATABASES = {
-    "default": heroku
+    "default": default_db
 }
 
 AUTH_PASSWORD_VALIDATORS = [
