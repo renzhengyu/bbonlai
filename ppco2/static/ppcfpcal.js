@@ -93,5 +93,9 @@ new Vue({
     loadResult: function (event) {
       this.submitClicked = true;
     },
+
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
   },
 });

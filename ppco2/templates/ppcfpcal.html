@@ -31,10 +31,10 @@
 
     <template slot="navigation" slot-scope="{previous, next}">
       <section class="section has-text-centered">
-        <b-button size="is-medium" outlined type="is-info"icon-pack="fas" icon-left="backward" :disabled="previous.disabled" @click.prevent="previous.action">
+        <b-button size="is-medium" outlined type="is-info"icon-pack="fas" icon-left="backward" :disabled="previous.disabled" @click.prevent="previous.action" @click="scrollToTop">
           Previous
         </b-button>
-        <b-button v-if="!next.disabled" size="is-medium" outlined type="is-success" icon-pack="fas" icon-right="forward" :disabled="next.disabled" @click.prevent="next.action">
+        <b-button v-if="!next.disabled" size="is-medium" outlined type="is-success" icon-pack="fas" icon-right="forward" :disabled="next.disabled" @click.prevent="next.action" @click="scrollToTop">
           Next
         </b-button>
         <b-button v-if="next.disabled" native-type="submit" size="is-medium" outlined type="is-primary" icon-pack="fas" icon-right="paper-plane" @click="loadResult" :loading="submitClicked">
