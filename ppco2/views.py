@@ -47,7 +47,6 @@ def planet_chart_data(request):
 def cfp_vue(request):
     if request.method == 'POST':
         form = CfpForm(request.POST)
-        print(request.POST, form.is_valid())
         if form.is_valid():
             cal = form.save()
             return redirect('ppco2:cal_result', pk=cal.pk)
